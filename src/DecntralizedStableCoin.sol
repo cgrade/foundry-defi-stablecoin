@@ -25,9 +25,9 @@
 
 pragma solidity ^0.8.19;
 
-import {ERC20Burnable} from "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import {ERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
-import {Ownable} from "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
+import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @title Decentralized Stable Coin
  * @author Abraham Elijah
@@ -38,7 +38,6 @@ import {Ownable} from "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
  */
 
 contract DecentralizedStableCoin is ERC20Burnable, Ownable {
-    
     /*//////////////////////////////////////////////////////////////
                              ERRORS
     //////////////////////////////////////////////////////////////*/
@@ -46,13 +45,13 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
     error ERC20Burnable__BurnAmountExceedsBalance();
     error DecentralizedStableCoin__NotZeroAddress();
 
-    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(msg.sender){}
+    constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(msg.sender) {}
 
-    /** 
+    /**
      * @notice Burns tokens from the caller
      * @dev This function burns tokens from the caller
      * @param _amount: amount of tokens to burn
-        */ 
+     */
     function burn(uint256 _amount) public override onlyOwner {
         uint256 balance = balanceOf(msg.sender);
         if (_amount <= 0) {
@@ -63,7 +62,6 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
         }
         super.burn(_amount);
     }
-
 
     /**
      * @notice Mint new tokens

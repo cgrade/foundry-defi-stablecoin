@@ -4,7 +4,7 @@ pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
 import {MockV3Aggregator} from "../test/mocks/MockV3Aggregator.t.sol";
-import {ERC20Mock} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
+import {ERC20Mock} from "@openzeppelin/mocks/token/ERC20Mock.sol";
 
 contract HelperConfig is Script {
     struct NetworkConfig {
@@ -18,7 +18,7 @@ contract HelperConfig is Script {
     // constants
     uint8 public constant WETH_DECIMALS = 8;
     uint8 public constant WBTC_DECIMALS = 8;
-    int256 public constant WETH_USD_PRICE = 2800 * 10 ** 8;
+    int256 public constant WETH_USD_PRICE = 2000 * 10 ** 8;
     int256 public constant WBTC_USD_PRICE = 60000 * 10 ** 8;
     uint256 public constant ANVIL_DEPLOYER_KEY = 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
 
@@ -27,8 +27,7 @@ contract HelperConfig is Script {
     constructor() {
         if (block.chainid == 11155111) {
             activeNetworkConfig = getSepoliaEthConfig();
-        }
-        else {
+        } else {
             activeNetworkConfig = getOrCreateAnvilConfig();
         }
     }
@@ -43,7 +42,7 @@ contract HelperConfig is Script {
         });
     }
 
-    function getOrCreateAnvilConfig() public returns (NetworkConfig memory){
+    function getOrCreateAnvilConfig() public returns (NetworkConfig memory) {
         // check to see if we have an existing config
         if (activeNetworkConfig.wethUsdPriceFeed != address(0)) {
             return activeNetworkConfig;
@@ -53,11 +52,11 @@ contract HelperConfig is Script {
         vm.startBroadcast();
         //weth mock $ PriceFeeds
         MockV3Aggregator wethUsdPriceFeed = new MockV3Aggregator(WETH_DECIMALS, WETH_USD_PRICE);
-        ERC20Mock wethMock = new ERC20Mock( );
+        ERC20Mock wethMock = new ERC20Mock();
 
         // wbtc mock and PriceFeeds
         MockV3Aggregator wbtcUsdPriceFeed = new MockV3Aggregator(WETH_DECIMALS, WBTC_USD_PRICE);
-        ERC20Mock wbtcMock = new ERC20Mock( );
+        ERC20Mock wbtcMock = new ERC20Mock();
         vm.stopBroadcast();
 
         return NetworkConfig({

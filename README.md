@@ -1,71 +1,82 @@
-# Decentralized Stablecoin Project
+# Decentralized Stable Coin (DSC) Project
 
-This project implements a decentralized stablecoin system using Solidity and OpenZeppelin libraries. The system includes a stablecoin contract (`DecentralizedStableCoin`) and an engine contract (`DSCEngine`) to manage the minting, burning, and collateralization of the stablecoin.
+## Overview
 
-## Contracts
+The Decentralized Stable Coin (DSC) project implements a decentralized stablecoin system that is algorithmically stabilized and pegged to the USD. The system is designed to maintain a 1:1 value with the USD while being overcollateralized with exogenous assets such as WETH and WBTC. This project includes the core smart contracts for the stablecoin, its engine, and deployment scripts.
 
-### DecentralizedStableCoin
+## Core Components
 
-The `DecentralizedStableCoin` contract is an ERC20 token with burnable functionality. It inherits from OpenZeppelin's `ERC20Burnable` and `Ownable` contracts.
+### 1. Smart Contracts
 
-#### Features
+- **DecentralizedStableCoin.sol**: Implements the ERC20 standard for the stablecoin, allowing minting and burning of tokens.
+- **DSCEngine.sol**: Manages the logic for minting and redeeming the stablecoin, as well as handling collateral deposits and withdrawals.
+- **HelperConfig.s.sol**: Provides configuration for deploying the DSC and DSCEngine contracts, including network-specific settings and mock price feeds for testing.
 
-- **Minting**: The contract allows minting of new tokens.
-- **Burning**: Only the owner can burn tokens.
-- **Ownership**: The contract uses OpenZeppelin's `Ownable` to manage ownership.
+### 2. Mock Contracts
 
-#### Errors
+- **MockV3Aggregator.t.sol**: A mock implementation of a price aggregator for testing purposes, simulating the behavior of a price feed.
 
-- `DecentralizedStableCoin__MustBeMoreThanZero`: Thrown when the burn amount is zero or less.
-- `ERC20Burnable__BurnAmountExceedsBalance`: Thrown when the burn amount exceeds the balance.
+### 3. Deployment Scripts
 
-### DSCEngine
+- **DeployDSC.s.sol**: Script for deploying the Decentralized Stable Coin and its associated DSCEngine, setting up necessary configurations and addresses.
 
-The `DSCEngine` contract manages the collateralization and health factor of users.
+### 4. Unit Tests
 
-#### Functions
+- **DSCEngineTest.t.sol**: Contains unit tests for the DSCEngine contract, ensuring the functionality of collateral deposits, price feed retrieval, and error handling.
 
-- `_getAccountInformation(address user)`: Returns the total DSC minted and the total collateral value in USD for a user.
-- `_healthFactor(address user)`: Calculates and returns the health factor of a user.
-- `revertIfHealthFactorIsBroken()`: Reverts the transaction if the user's health factor is below the threshold.
+## Project Structure
+
+```
+project-root/
+│
+├── script/
+│   ├── DeployDSC.s.sol
+│   └── HelperConfig.s.sol
+│
+├── src/
+│   ├── DecentralizedStableCoin.sol
+│   └── DSCEngine.sol
+│
+├── test/
+│   ├── mocks/
+│   │   └── MockV3Aggregator.t.sol
+│   └── unit/
+│       └── DSCEngineTest.t.sol
+│
+└── README.md
+```
 
 ## Installation
 
-1. Clone the repository:
+To get started with the project, follow these steps:
 
-   ```sh
-   git clone https://github.com/cgrade/foundry-defi-stablecoin.git
-   cd decentralized-stablecoin
+1. **Clone the repository**:
+
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
    ```
 
-2. Install dependencies:
+2. **Install dependencies**:
+   Ensure you have [Foundry](https://book.getfoundry.sh/) installed. Then run:
 
-   ```sh
+   ```bash
    forge install
    ```
 
-3. Compile the contracts:
-   ```sh
+3. **Compile the contracts**:
+
+   ```bash
    forge build
+   ```
+
+4. **Run tests**:
+   ```bash
+   forge test
    ```
 
 ## Usage
 
-1. Deploy the contracts:
+### Deploying the Contracts
 
-   ```sh
-   forge script script/Deploy.s.sol --broadcast
-   ```
-
-2. Interact with the contracts using Foundry console:
-   ```sh
-   forge console
-   ```
-
-## Testing
-
-Run the tests to ensure the contracts work as expected:
-
-```sh
-forge test
-```
+To deploy the DSC and DSCEngine contracts, run the following command:

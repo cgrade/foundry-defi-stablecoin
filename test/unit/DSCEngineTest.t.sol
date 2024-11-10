@@ -104,4 +104,15 @@ contract DSCEngineTest is Test {
         assertEq(totalDscMinted, expectedTotalDscMinted);
         assertEq(AMOUNT_COLLATERAL, expectedDepositAmount);
     }
+
+    function testDepositCollateral() public depositedCollateral {
+        uint256 expectedTotalDscMinted = 0;
+        uint256 expectedDepositAmount = engine.getTokenAmountFromUsd(weth, AMOUNT_COLLATERAL);
+        uint256 expectedCollateralValueInUsd = engine.getUsdValue(weth, AMOUNT_COLLATERAL);
+
+        (uint256 totalDscMinted, uint256 collateralVauleInUsd) = engine.getAccountInformation(USER);
+        assertEq(totalDscMinted, expectedTotalDscMinted);
+        assertEq(AMOUNT_COLLATERAL, expectedDepositAmount);
+        assertEq(collateralVauleInUsd, expectedCollateralValueInUsd);
+    }
 }

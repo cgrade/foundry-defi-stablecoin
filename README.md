@@ -80,3 +80,36 @@ To get started with the project, follow these steps:
 ### Deploying the Contracts
 
 To deploy the DSC and DSCEngine contracts, run the following command:
+
+```bash
+forge script script/DeployDSC.s.sol --broadcast
+```
+
+### Interacting with the Contracts
+
+Once deployed, you can interact with the contracts using a web3 provider or through a frontend application. The `DSCEngine` contract provides functions for depositing collateral, minting DSC, and redeeming collateral.
+
+## Testing
+
+The project includes unit tests for the `DSCEngine` contract. To run the tests, use the following command:
+
+```bash
+forge test
+```
+
+## Contributing
+
+Contributions are welcome! If you have suggestions for improvements or find bugs, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Acknowledgments
+
+- Special thanks to the OpenZeppelin team for their ERC20 implementation and security libraries.
+- Thanks to Chainlink for providing reliable price feeds.
+
+```
+
+```
